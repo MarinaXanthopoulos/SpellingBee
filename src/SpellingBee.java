@@ -45,12 +45,14 @@ public class SpellingBee {
     //  that will find the substrings recursively.
     public void generate() {
         // YOUR CODE HERE — Call your recursive method!
+
     }
 
     // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
     //  that will find the substrings recursively.
     public void sort() {
         // YOUR CODE HERE
+
     }
 
     // Removes duplicates from the sorted list.
@@ -69,8 +71,37 @@ public class SpellingBee {
     //  If it is not in the dictionary, remove it from words.
     public void checkWords() {
         // YOUR CODE HERE
+        // Traverse through words list
+        for(String word : words) {
+            // Call and perform binary search
+            // If it returns false, remove the word from the list of possible words
+            if(!binarySearch(word)){
+            }
+        }
+
+
     }
 
+    public boolean binarySearch(String word){
+        // Set low and high to the dictionary parameters (o, end)
+        int low = 0, high = DICTIONARY_SIZE -1;
+
+        while (low <= high) {
+            // Start at the middle
+            int mid = low + (high - low) / 2;
+            // Compare the current index (mid) to the word we're searching for
+            int compare = DICTIONARY[mid].compareTo(word);
+            // Adjust the midpoint accordingly, return true if there's no difference
+            if (compare == 0) {
+                return true;
+            } else if (compare < 0) {
+                low = mid++;
+            } else {
+                high = mid--;
+            }
+        }
+        return false;
+    }
     // Prints all valid words to wordList.txt
     public void printWords() throws IOException {
         File wordFile = new File("Resources/wordList.txt");

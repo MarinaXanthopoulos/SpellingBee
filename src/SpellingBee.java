@@ -45,7 +45,19 @@ public class SpellingBee {
     //  that will find the substrings recursively.
     public void generate() {
         // YOUR CODE HERE — Call your recursive method!
+        generateHelper("", letters);
+    }
 
+    private void generateHelper(String prefix, String remaining){
+        // Add the word to the list if prefix isn't empty so every possible combo is stored
+        if (!prefix.isEmpty()){
+            words.add(prefix);
+        }
+        // Loop through each character in the remaining
+        for (int i = 0; i < remaining.length(); i++){
+            // Form a new substring adding each character to prefix then removing the character from remaining
+            generateHelper(prefix + remaining.charAt(i), remaining.substring(0, i) + remaining.substring(i+1));
+        }
     }
 
     // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
@@ -72,20 +84,20 @@ public class SpellingBee {
     public void checkWords() {
         // YOUR CODE HERE
         // Traverse through words list
-        for(String word : words) {
+        for(int i = 0; i < words.size(); i++) {
             // Call and perform binary search
+            String word = words.get(i);
             // If it returns false, remove the word from the list of possible words
             if(!binarySearch(word)){
+                words.remove(i);
+                i--;
             }
         }
-
-
     }
 
     public boolean binarySearch(String word){
         // Set low and high to the dictionary parameters (o, end)
         int low = 0, high = DICTIONARY_SIZE -1;
-
         while (low <= high) {
             // Start at the middle
             int mid = low + (high - low) / 2;
@@ -102,6 +114,7 @@ public class SpellingBee {
         }
         return false;
     }
+
     // Prints all valid words to wordList.txt
     public void printWords() throws IOException {
         File wordFile = new File("Resources/wordList.txt");

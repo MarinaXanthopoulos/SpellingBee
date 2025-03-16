@@ -64,7 +64,52 @@ public class SpellingBee {
     //  that will find the substrings recursively.
     public void sort() {
         // YOUR CODE HERE
+        words = mergeSort(words, 0, words.size());
 
+    }
+
+    private ArrayList<String> mergeSort(ArrayList<String> list, int start, int end){
+        // Base case: segment only has one element or is empty
+        if(start == end - 1){
+            ArrayList<String> single = new ArrayList<>();
+            single.add(list.get(start));
+            return single;
+        }
+
+        // Find middle index to split list
+        int mid = (start + end) / 2;
+
+        // Recursively sort left and right halves
+        ArrayList<String> left = mergeSort(list, start, mid);
+        ArrayList<String> right = mergeSort(list, mid, end);
+
+        // Merge the sorted halves back together
+        return merge(left, right);
+    }
+
+    // Merge method to add the sorted sides back together
+    private ArrayList<String> merge(ArrayList<String> left, ArrayList<String> right){
+        ArrayList<String> merged = new ArrayList<>();
+        int i = 0, j = 0;
+
+        // Compare elements from both lists and add the smaller one first
+        while (i < left.size() && j < right.size()){
+            if (left.get(i).compareTo(right.get(j)) < 0){
+                merged.add(left.get(i++));
+            } else {
+                merged.add(right.get(j++));
+            }
+        }
+
+        // Once one of the lists is empty, just add the rest of the elements
+        while (i < left.size()){
+            merged.add(left.get(i++));
+        }
+        while(j < right.size()){
+            merged.add(right.get(j++));
+        }
+
+        return merged;
     }
 
     // Removes duplicates from the sorted list.
@@ -84,13 +129,10 @@ public class SpellingBee {
     public void checkWords() {
         // YOUR CODE HERE
         // Traverse through words list
-        for(int i = 0; i < words.size(); i++) {
-            // Call and perform binary search
-            String word = words.get(i);
+        for(int i = words.size() - 1; i >= 0; i--) {
             // If it returns false, remove the word from the list of possible words
-            if(!binarySearch(word)){
+            if(!binarySearch(words.get(i))){
                 words.remove(i);
-                i--;
             }
         }
     }

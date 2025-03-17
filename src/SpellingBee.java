@@ -128,7 +128,6 @@ public class SpellingBee {
 
     // Binary search to see if it is in the dictionary and remove it if it's not
     public void checkWords() {
-        // YOUR CODE HERE
         // Traverse through words list
         for(int i = words.size() - 1; i >= 0; i--) {
             // If it returns false, remove the word from the list of possible words

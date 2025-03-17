@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Spelling Bee by Marina Xantho
+
 /**
  * Spelling Bee
  *
@@ -40,34 +42,34 @@ public class SpellingBee {
         words = new ArrayList<String>();
     }
 
-    // TODO: generate all possible substrings and permutations of the letters.
-    //  Store them all in the ArrayList words. Do this by calling ANOTHER method
-    //  that will find the substrings recursively.
+    // Call recursive function to generate list of words
     public void generate() {
         // YOUR CODE HERE — Call your recursive method!
         generateHelper("", letters);
     }
 
+    // Recursively make all possible word combos
     private void generateHelper(String prefix, String remaining){
-        // Add the word to the list if prefix isn't empty so every possible combo is stored
+        // Add the word to the list if prefix, my original, isn't empty so every possible combo is stored
         if (!prefix.isEmpty()){
             words.add(prefix);
         }
-        // Loop through each character in the remaining
+        // Loop through each character in the remaining, do this in a loop to change the starting letter
         for (int i = 0; i < remaining.length(); i++){
             // Form a new substring adding each character to prefix then removing the character from remaining
-            generateHelper(prefix + remaining.charAt(i), remaining.substring(0, i) + remaining.substring(i+1));
+            generateHelper(prefix + remaining.charAt(i), remaining.substring(0, i)
+                    + remaining.substring(i+1));
         }
     }
 
-    // TODO: Apply mergesort to sort all words. Do this by calling ANOTHER method
-    //  that will find the substrings recursively.
+    // Mergesort all words recursively.
     public void sort() {
         // YOUR CODE HERE
         words = mergeSort(words, 0, words.size());
 
     }
 
+    // Split words down to sort them quicker
     private ArrayList<String> mergeSort(ArrayList<String> list, int start, int end){
         // Base case: segment only has one element or is empty
         if(start == end - 1){
@@ -124,8 +126,7 @@ public class SpellingBee {
         }
     }
 
-    // TODO: For each word in words, use binary search to see if it is in the dictionary.
-    //  If it is not in the dictionary, remove it from words.
+    // Binary search to see if it is in the dictionary and remove it if it's not
     public void checkWords() {
         // YOUR CODE HERE
         // Traverse through words list
@@ -149,9 +150,9 @@ public class SpellingBee {
             if (compare == 0) {
                 return true;
             } else if (compare < 0) {
-                low = mid++;
+                low = mid + 1;
             } else {
-                high = mid--;
+                high = mid - 1;
             }
         }
         return false;
